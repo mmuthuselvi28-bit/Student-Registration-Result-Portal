@@ -1,0 +1,1359 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudentHub | Registration & Result Portal</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f7fb;
+            font-family: "Segoe UI", sans-serif;
+            color: #263238;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: linear-gradient(135deg, #182848, #4b6cb7);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-size: 23px;
+            font-weight: 700;
+            color: white !important;
+        }
+
+        .navbar-brand i {
+            margin-right: 8px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,.85) !important;
+            margin-left: 15px;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        /* HERO */
+
+        .hero {
+            background: linear-gradient(135deg, #182848, #4b6cb7);
+            color: white;
+            padding: 65px 0 90px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            color: #dce5ff;
+            max-width: 650px;
+        }
+
+        .hero-icon {
+            font-size: 130px;
+            opacity: .25;
+        }
+
+        /* MAIN */
+
+        .main-container {
+            margin-top: -55px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* CARDS */
+
+        .modern-card {
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.08);
+            background: white;
+        }
+
+        .card-title {
+            font-weight: 700;
+            color: #182848;
+        }
+
+        /* FORM */
+
+        .form-control,
+        .form-select {
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #dce1e8;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            box-shadow: 0 0 0 3px rgba(75,108,183,.15);
+            border-color: #4b6cb7;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* BUTTON */
+
+        .btn-main {
+            background: linear-gradient(135deg, #182848, #4b6cb7);
+            border: none;
+            color: white;
+            padding: 13px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .btn-main:hover {
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* RESULT */
+
+        #resultSection {
+            display: none;
+        }
+
+        .result-header {
+            background: linear-gradient(135deg, #182848, #4b6cb7);
+            color: white;
+            border-radius: 18px 18px 0 0;
+            padding: 30px;
+        }
+
+        .student-avatar {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: white;
+            color: #4b6cb7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        /* STAT CARDS */
+
+        .stat-card {
+            border: none;
+            border-radius: 15px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 7px 20px rgba(0,0,0,.06);
+            height: 100%;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #eef3ff;
+            color: #4b6cb7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .stat-number {
+            font-size: 25px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        /* PROGRESS */
+
+        .progress {
+            height: 9px;
+            border-radius: 20px;
+            background: #edf0f5;
+        }
+
+        .progress-bar {
+            border-radius: 20px;
+            background: linear-gradient(90deg, #4b6cb7, #182848);
+        }
+
+        /* PASS FAIL */
+
+        .pass {
+            color: #198754;
+            font-weight: 700;
+        }
+
+        .fail {
+            color: #dc3545;
+            font-weight: 700;
+        }
+
+        .grade-badge {
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            background: #eef3ff;
+            color: #4b6cb7;
+        }
+
+        /* SUBJECT TABLE */
+
+        .table {
+            vertical-align: middle;
+        }
+
+        .table thead {
+            background: #f4f7fb;
+        }
+
+        /* TOAST */
+
+        .toast-container {
+            z-index: 9999;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 70px;
+            background: #182848;
+            color: white;
+            padding: 30px;
+        }
+
+        /* DARK MODE */
+
+        body.dark {
+            background: #111827;
+            color: #e5e7eb;
+        }
+
+        body.dark .modern-card,
+        body.dark .stat-card {
+            background: #1f2937;
+            color: #e5e7eb;
+        }
+
+        body.dark .card-title,
+        body.dark .text-dark {
+            color: #fff !important;
+        }
+
+        body.dark .table {
+            color: white;
+        }
+
+        body.dark .form-control,
+        body.dark .form-select {
+            background: #374151;
+            color: white;
+            border-color: #4b5563;
+        }
+
+        body.dark .table thead {
+            background: #374151;
+        }
+
+        /* ANIMATION */
+
+        .fade-in {
+            animation: fadeIn .6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media(max-width: 768px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .hero-icon {
+                display: none;
+            }
+
+            .hero {
+                padding: 45px 0 80px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+
+        <a class="navbar-brand" href="#">
+            <i class="bi bi-mortarboard-fill"></i>
+            StudentHub
+        </a>
+
+        <button class="navbar-toggler bg-light"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#registration">
+                        Registration
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#resultSection">
+                        Results
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <button class="btn btn-sm btn-light ms-3"
+                            onclick="toggleDarkMode()">
+                        <i class="bi bi-moon-fill"></i>
+                    </button>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+
+                <span class="badge bg-light text-primary mb-3">
+                    STUDENT MANAGEMENT SYSTEM
+                </span>
+
+                <h1>
+                    Student Registration
+                    <br>
+                    & Result Portal
+                </h1>
+
+                <p class="lead mt-3">
+                    Register student information, enter examination
+                    marks and generate a complete result instantly.
+                </p>
+
+            </div>
+
+            <div class="col-md-4 text-center">
+
+                <i class="bi bi-person-vcard hero-icon"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MAIN -->
+
+<div class="container main-container">
+
+    <!-- REGISTRATION -->
+
+    <div class="modern-card p-4 p-md-5 mb-5" id="registration">
+
+        <div class="d-flex align-items-center mb-4">
+
+            <div class="stat-icon me-3">
+                <i class="bi bi-person-plus-fill"></i>
+            </div>
+
+            <div>
+                <h3 class="card-title mb-1">
+                    Student Registration
+                </h3>
+
+                <small class="text-muted">
+                    Enter student information and examination marks
+                </small>
+            </div>
+
+        </div>
+
+
+        <form id="studentForm">
+
+            <!-- PERSONAL DETAILS -->
+
+            <h5 class="mb-3">
+                <i class="bi bi-person-lines-fill me-2"></i>
+                Personal Details
+            </h5>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Full Name
+                    </label>
+
+                    <input type="text"
+                           id="studentName"
+                           class="form-control"
+                           placeholder="Enter full name"
+                           required>
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Register Number
+                    </label>
+
+                    <input type="text"
+                           id="registerNo"
+                           class="form-control"
+                           placeholder="Example: 24CSE001"
+                           required>
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Email Address
+                    </label>
+
+                    <input type="email"
+                           id="email"
+                           class="form-control"
+                           placeholder="student@example.com"
+                           required>
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Course
+                    </label>
+
+                    <select id="course"
+                            class="form-select"
+                            required>
+
+                        <option value="">
+                            Select Course
+                        </option>
+
+                        <option>
+                            B.Tech Computer Science
+                        </option>
+
+                        <option>
+                            B.Tech Information Technology
+                        </option>
+
+                        <option>
+                            BCA
+                        </option>
+
+                        <option>
+                            MCA
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <hr class="my-4">
+
+
+            <!-- MARKS -->
+
+            <h5 class="mb-3">
+                <i class="bi bi-bar-chart-fill me-2"></i>
+                Examination Marks
+            </h5>
+
+            <div class="row">
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+                        HTML
+                    </label>
+
+                    <input type="number"
+                           id="html"
+                           class="form-control"
+                           min="0"
+                           max="100"
+                           placeholder="0 - 100"
+                           required>
+
+                </div>
+
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+                        CSS
+                    </label>
+
+                    <input type="number"
+                           id="css"
+                           class="form-control"
+                           min="0"
+                           max="100"
+                           placeholder="0 - 100"
+                           required>
+
+                </div>
+
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+                        JavaScript
+                    </label>
+
+                    <input type="number"
+                           id="javascript"
+                           class="form-control"
+                           min="0"
+                           max="100"
+                           placeholder="0 - 100"
+                           required>
+
+                </div>
+
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+                        Bootstrap
+                    </label>
+
+                    <input type="number"
+                           id="bootstrap"
+                           class="form-control"
+                           min="0"
+                           max="100"
+                           placeholder="0 - 100"
+                           required>
+
+                </div>
+
+            </div>
+
+
+            <div class="d-flex gap-2 mt-4">
+
+                <button type="submit"
+                        class="btn btn-main">
+
+                    <i class="bi bi-calculator-fill me-2"></i>
+                    Generate Result
+
+                </button>
+
+                <button type="reset"
+                        class="btn btn-outline-secondary"
+                        onclick="resetResult()">
+
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                    Reset
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- RESULT SECTION -->
+
+    <section id="resultSection" class="fade-in">
+
+        <!-- RESULT HEADER -->
+
+        <div class="modern-card mb-4">
+
+            <div class="result-header">
+
+                <div class="row align-items-center">
+
+                    <div class="col-auto">
+
+                        <div class="student-avatar"
+                             id="studentInitial">
+                            S
+                        </div>
+
+                    </div>
+
+                    <div class="col">
+
+                        <h2 id="resultName">
+                            Student Name
+                        </h2>
+
+                        <p class="mb-1">
+                            Register No:
+                            <strong id="resultRegister"></strong>
+                        </p>
+
+                        <p class="mb-0">
+                            <span id="resultCourse"></span>
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-auto mt-3 mt-md-0">
+
+                        <span id="resultStatus"
+                              class="badge bg-success fs-6 px-4 py-2">
+                            PASS
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STAT CARDS -->
+
+            <div class="p-4">
+
+                <div class="row g-4">
+
+                    <div class="col-md-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon">
+                                <i class="bi bi-trophy-fill"></i>
+                            </div>
+
+                            <small class="text-muted">
+                                Total Marks
+                            </small>
+
+                            <div class="stat-number"
+                                 id="totalMarks">
+                                0
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon">
+                                <i class="bi bi-percent"></i>
+                            </div>
+
+                            <small class="text-muted">
+                                Percentage
+                            </small>
+
+                            <div class="stat-number"
+                                 id="percentage">
+                                0%
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon">
+                                <i class="bi bi-award-fill"></i>
+                            </div>
+
+                            <small class="text-muted">
+                                Grade
+                            </small>
+
+                            <div class="stat-number">
+                                <span class="grade-badge"
+                                      id="grade">
+                                    -
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon">
+                                <i class="bi bi-check-circle-fill"></i>
+                            </div>
+
+                            <small class="text-muted">
+                                Result
+                            </small>
+
+                            <div class="stat-number"
+                                 id="resultText">
+                                -
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUBJECT RESULTS -->
+
+        <div class="modern-card p-4 mb-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h4 class="card-title mb-0">
+                    <i class="bi bi-table me-2"></i>
+                    Subject-wise Performance
+                </h4>
+
+                <button class="btn btn-outline-primary"
+                        onclick="window.print()">
+
+                    <i class="bi bi-printer"></i>
+                    Print
+
+                </button>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Subject</th>
+                            <th>Marks</th>
+                            <th>Performance</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                <i class="bi bi-code-slash me-2"></i>
+                                HTML
+                            </td>
+
+                            <td id="htmlResult">0</td>
+
+                            <td style="width:40%">
+
+                                <div class="progress">
+
+                                    <div class="progress-bar"
+                                         id="htmlProgress"
+                                         style="width:0%">
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td id="htmlStatus">
+                                -
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <i class="bi bi-palette me-2"></i>
+                                CSS
+                            </td>
+
+                            <td id="cssResult">0</td>
+
+                            <td>
+
+                                <div class="progress">
+
+                                    <div class="progress-bar"
+                                         id="cssProgress"
+                                         style="width:0%">
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td id="cssStatus">
+                                -
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <i class="bi bi-file-code me-2"></i>
+                                JavaScript
+                            </td>
+
+                            <td id="jsResult">0</td>
+
+                            <td>
+
+                                <div class="progress">
+
+                                    <div class="progress-bar"
+                                         id="jsProgress"
+                                         style="width:0%">
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td id="jsStatus">
+                                -
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <i class="bi bi-bootstrap me-2"></i>
+                                Bootstrap
+                            </td>
+
+                            <td id="bootstrapResult">0</td>
+
+                            <td>
+
+                                <div class="progress">
+
+                                    <div class="progress-bar"
+                                         id="bootstrapProgress"
+                                         style="width:0%">
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td id="bootstrapStatus">
+                                -
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- STUDENT DETAILS -->
+
+        <div class="modern-card p-4 mb-5">
+
+            <h4 class="card-title mb-4">
+                <i class="bi bi-person-badge me-2"></i>
+                Student Information
+            </h4>
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+
+                    <small class="text-muted">
+                        Student Name
+                    </small>
+
+                    <div class="fw-bold"
+                         id="infoName">
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4 mb-3">
+
+                    <small class="text-muted">
+                        Register Number
+                    </small>
+
+                    <div class="fw-bold"
+                         id="infoRegister">
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4 mb-3">
+
+                    <small class="text-muted">
+                        Email
+                    </small>
+
+                    <div class="fw-bold"
+                         id="infoEmail">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer class="text-center">
+
+    <h5>
+        <i class="bi bi-mortarboard-fill"></i>
+        StudentHub
+    </h5>
+
+    <p class="mb-0">
+        Student Registration & Result Portal
+    </p>
+
+    <small>
+        Mini Project | HTML5 | Bootstrap | JavaScript
+    </small>
+
+</footer>
+
+
+<!-- TOAST -->
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+
+    <div id="successToast"
+         class="toast">
+
+        <div class="toast-header">
+
+            <i class="bi bi-check-circle-fill text-success me-2"></i>
+
+            <strong class="me-auto">
+                Success
+            </strong>
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="toast">
+            </button>
+
+        </div>
+
+        <div class="toast-body">
+            Student result generated successfully!
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+
+    // FORM SUBMISSION
+
+    document.getElementById("studentForm")
+        .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        // Student details
+
+        let name =
+            document.getElementById("studentName").value.trim();
+
+        let registerNo =
+            document.getElementById("registerNo").value.trim();
+
+        let email =
+            document.getElementById("email").value.trim();
+
+        let course =
+            document.getElementById("course").value;
+
+
+        // Marks
+
+        let html =
+            Number(document.getElementById("html").value);
+
+        let css =
+            Number(document.getElementById("css").value);
+
+        let js =
+            Number(document.getElementById("javascript").value);
+
+        let bootstrap =
+            Number(document.getElementById("bootstrap").value);
+
+
+        // Validation
+
+        let marks = [html, css, js, bootstrap];
+
+        for (let mark of marks) {
+
+            if (mark < 0 || mark > 100 || isNaN(mark)) {
+
+                alert("Please enter marks between 0 and 100.");
+
+                return;
+            }
+        }
+
+
+        // Calculate
+
+        let total =
+            html + css + js + bootstrap;
+
+        let percentage =
+            total / 4;
+
+
+        // Grade
+
+        let grade;
+
+        if (percentage >= 90) {
+            grade = "A+";
+        }
+        else if (percentage >= 80) {
+            grade = "A";
+        }
+        else if (percentage >= 70) {
+            grade = "B";
+        }
+        else if (percentage >= 60) {
+            grade = "C";
+        }
+        else if (percentage >= 50) {
+            grade = "D";
+        }
+        else {
+            grade = "F";
+        }
+
+
+        // Pass / Fail
+
+        let passed =
+            html >= 40 &&
+            css >= 40 &&
+            js >= 40 &&
+            bootstrap >= 40;
+
+        let status =
+            passed ? "PASS" : "FAIL";
+
+
+        // Header
+
+        document.getElementById("resultName")
+            .innerText = name;
+
+        document.getElementById("resultRegister")
+            .innerText = registerNo;
+
+        document.getElementById("resultCourse")
+            .innerText = course;
+
+
+        // Avatar
+
+        document.getElementById("studentInitial")
+            .innerText =
+            name.charAt(0).toUpperCase();
+
+
+        // Statistics
+
+        document.getElementById("totalMarks")
+            .innerText = total + " / 400";
+
+        document.getElementById("percentage")
+            .innerText =
+            percentage.toFixed(2) + "%";
+
+        document.getElementById("grade")
+            .innerText = grade;
+
+        document.getElementById("resultText")
+            .innerText = status;
+
+
+        // Status badge
+
+        let statusBadge =
+            document.getElementById("resultStatus");
+
+        statusBadge.innerText = status;
+
+        if (passed) {
+
+            statusBadge.className =
+                "badge bg-success fs-6 px-4 py-2";
+
+            document.getElementById("resultText")
+                .className = "stat-number pass";
+
+        }
+        else {
+
+            statusBadge.className =
+                "badge bg-danger fs-6 px-4 py-2";
+
+            document.getElementById("resultText")
+                .className = "stat-number fail";
+        }
+
+
+        // Subject results
+
+        updateSubject(
+            "html",
+            html
+        );
+
+        updateSubject(
+            "css",
+            css
+        );
+
+        updateSubject(
+            "js",
+            js
+        );
+
+        updateSubject(
+            "bootstrap",
+            bootstrap
+        );
+
+
+        // Student information
+
+        document.getElementById("infoName")
+            .innerText = name;
+
+        document.getElementById("infoRegister")
+            .innerText = registerNo;
+
+        document.getElementById("infoEmail")
+            .innerText = email;
+
+
+        // Show result
+
+        let resultSection =
+            document.getElementById("resultSection");
+
+        resultSection.style.display = "block";
+
+        resultSection.classList.add("fade-in");
+
+
+        // Toast
+
+        let toast =
+            new bootstrap.Toast(
+                document.getElementById("successToast")
+            );
+
+        toast.show();
+
+
+        // Scroll
+
+        setTimeout(function() {
+
+            resultSection.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }, 200);
+
+    });
+
+
+    // SUBJECT UPDATE FUNCTION
+
+    function updateSubject(subject, mark) {
+
+        document.getElementById(
+            subject + "Result"
+        ).innerText = mark + " / 100";
+
+
+        document.getElementById(
+            subject + "Progress"
+        ).style.width = mark + "%";
+
+
+        let statusElement =
+            document.getElementById(
+                subject + "Status"
+            );
+
+
+        if (mark >= 40) {
+
+            statusElement.innerHTML =
+                '<span class="pass">PASS</span>';
+
+        }
+        else {
+
+            statusElement.innerHTML =
+                '<span class="fail">FAIL</span>';
+
+        }
+
+    }
+
+
+    // RESET
+
+    function resetResult() {
+
+        document.getElementById("resultSection")
+            .style.display = "none";
+
+    }
+
+
+    // DARK MODE
+
+    function toggleDarkMode() {
+
+        document.body.classList.toggle("dark");
+
+    }
+
+</script>
+
+</body>
+</html>
+```
